@@ -8,11 +8,10 @@ def get_dominant_color_info(
     if threshold < 1:
         raise ValueError("threshold must be positive")
 
-    arr = np.array(image).ravel()
-    if arr.size == 0:
+    if image.size == 0:
         return np.uint8(0), 0.0
 
-    uniq, counts = np.unique(arr, return_counts=True)
+    uniq, counts = np.unique(image, return_counts=True)
     color_freq = np.zeros(256)
     color_freq[uniq] = counts
 
@@ -28,6 +27,6 @@ def get_dominant_color_info(
 
     best_color = np.argmax(window_sums)
     best_sum = window_sums[best_color]
-    percent = best_sum / arr.size * 100
+    percent = best_sum / image.size * 100
 
     return np.uint8(best_color), percent
